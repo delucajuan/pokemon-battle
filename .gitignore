@@ -131,3 +131,7 @@ dist
 
 # macOS
 .DS_Store
+
+# DB
+*.sqlite
+api/pokemon-battle.sqlite

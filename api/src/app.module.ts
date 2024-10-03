@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PokemonModule } from './pokemon/pokemon.module';
+import { BattleModule } from './battle/battle.module';
 
 @Module({
   imports: [
@@ -10,9 +11,10 @@ import { PokemonModule } from './pokemon/pokemon.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       migrations: [__dirname + '/migrations/*{.ts,.js}'],
       synchronize: false,
-      migrationsRun: true,
+      migrationsRun: false,
     }),
     PokemonModule,
+    BattleModule,
   ],
 })
 export class AppModule {}

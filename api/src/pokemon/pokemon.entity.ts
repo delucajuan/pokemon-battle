@@ -1,22 +1,28 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Pokemon {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   name: string;
 
-  @Column()
-  hp: number;
-
-  @Column()
+  @Column('int')
   attack: number;
 
-  @Column()
+  @Column('int')
   defense: number;
 
-  @Column()
+  @Column('int')
+  hp: number;
+
+  @Column('int')
   speed: number;
+
+  @Column()
+  type: string;
+
+  @Column()
+  imageUrl: string;
 }
