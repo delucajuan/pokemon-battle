@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { Pokemon } from '../pokemon/pokemon.entity';
-import { BattleResult } from '../battle/battle-result.entity';
+import { BattleResult } from '../battle/battleResult.entity';
 
 export const AppDataSource = new DataSource({
   type: 'sqlite',

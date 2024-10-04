@@ -41,6 +41,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+/.pnp
+.pnp.js
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -135,3 +137,9 @@ dist
 # DB
 *.sqlite
 api/pokemon-battle.sqlite
+
+# production
+/build
+
+# testing
+/coverage
