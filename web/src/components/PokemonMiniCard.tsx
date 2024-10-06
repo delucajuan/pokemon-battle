@@ -5,7 +5,7 @@ function PokemonMiniCard({ pokemon, onClick }: PokemonMiniCardProps) {
   return (
     <Card
       sx={{
-        width: 157,
+        width: { xs: 130, sm: 140 },
         borderRadius: '10px',
       }}
     >
@@ -15,7 +15,7 @@ function PokemonMiniCard({ pokemon, onClick }: PokemonMiniCardProps) {
           width="100%"
           style={{
             objectFit: 'contain',
-            padding: 6,
+            padding: '8px',
           }}
           image={pokemon.imageUrl}
           alt="pokemon"

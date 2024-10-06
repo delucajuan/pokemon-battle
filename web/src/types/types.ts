@@ -1,3 +1,5 @@
+import { CardProps } from '@mui/material';
+
 export interface FetchError extends Error {
   status?: number;
   statusText?: string;
@@ -19,10 +21,15 @@ export interface PokemonMiniCardProps {
   onClick: (pokemon: Pokemon) => void;
 }
 
+export interface PokemonBattleCardProps extends CardProps {
+  pokemon: Pokemon;
+}
+
 export interface BattleProps {
   attacker: Pokemon | null;
   defender: Pokemon | null;
-  onWin: (pokemonName: string) => void;
+  winnerName: string | null;
+  setWinnerName: (nme: string) => void;
 }
 
 export interface BattleRequest {
@@ -30,12 +37,23 @@ export interface BattleRequest {
   defenderId: string;
 }
 
-export interface BattleResult {
+export interface Battle {
+  id: string;
   winnerId: string;
+  battleDate: Date;
   attacker: Fighter;
   defender: Fighter;
-  id: string;
-  battleDate: Date;
+}
+export interface PaginationMetadata {
+  total: number;
+  pages: number;
+  currentPage: number;
+  pageSize: number;
+}
+
+export interface BattlesResponse {
+  metadata: PaginationMetadata;
+  data: Battle[];
 }
 
 export interface Fighter {
@@ -47,4 +65,9 @@ export interface Fighter {
   speed: number;
   type: string;
   imageUrl: string;
+}
+
+export interface StatProp {
+  name: string;
+  value: number;
 }
