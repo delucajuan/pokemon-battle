@@ -5,7 +5,7 @@ import { BattleResult } from '../battle/battleResult.entity';
 
 export const AppDataSource = new DataSource({
   type: 'sqlite',
-  database: 'pokemon-battle.sqlite',
+  database: 'db/db.sqlite',
   entities: [Pokemon, BattleResult],
   migrations: ['src/migrations/*.ts'],
   synchronize: false,

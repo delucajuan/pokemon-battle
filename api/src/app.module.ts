@@ -7,7 +7,7 @@ import { BattleModule } from './battle/battle.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'pokemon-battle.sqlite',
+      database: 'db/db.sqlite',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       migrations: [__dirname + '/migrations/*{.ts,.js}'],
       synchronize: false,
