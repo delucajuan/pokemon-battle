@@ -13,7 +13,10 @@ export class BattleService {
     private battleResultRepository: Repository<BattleResult>,
   ) {}
 
-  async initiateBattle(attackerId: string, defenderId?: string): Promise<BattleResult> {
+  async initiateBattle(
+    attackerId: string,
+    defenderId?: string,
+  ): Promise<BattleResult> {
     const attacker = await this.pokemonRepository.findOneBy({ id: attackerId });
     if (!attacker) throw new NotFoundException('Attacker Pokémon not found');
 
@@ -62,28 +65,35 @@ export class BattleService {
       }
     }
 
-    let hp1 = poke1.hp;
-    let hp2 = poke2.hp;
+    let hp1 = first.hp;
+    let hp2 = second.hp;
 
     while (hp1 > 0 && hp2 > 0) {
-      // First attacks second
+      // First pokemon attacks
       const damage1 = Math.max(first.attack - second.defense, 1);
       hp2 -= damage1;
       if (hp2 <= 0) return first;
 
-      // Second attacks first
+      // Second pokemon attacks
       const damage2 = Math.max(second.attack - first.defense, 1);
       hp1 -= damage2;
       if (hp1 <= 0) return second;
     }
-
-    // Fallback
-    return hp1 > 0 ? first : second;
   }
 
-  async getAllBattles(): Promise<BattleResult[]> {
-    return this.battleResultRepository.find({
+  async getAllBattles(
+    limit: number,
+    page: number,
+  ): Promise<{ battles: BattleResult[]; total: number }> {
+    const [battles, total] = await this.battleResultRepository.findAndCount({
       relations: ['attacker', 'defender'],
+      take: limit,
+      skip: (page - 1) * limit,
+      order: {
+        battleDate: 'DESC',
+      },
     });
+
+    return { battles, total };
   }
 }
