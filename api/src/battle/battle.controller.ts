@@ -2,32 +2,23 @@ import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { BattleService } from './battle.service';
 import { BattleResult } from './battleResult.entity';
 import { BattlesResponse } from './battle.interface';
+import { CreateBattleDto } from './dto/createBattle.dto';
+import { GetBattlesDto } from './dto/getBattles.dto';
 
 @Controller('battle')
 export class BattleController {
   constructor(private readonly battleService: BattleService) {}
 
   @Post()
-  async battle(
-    @Body() battleDto: { attackerId: string; defenderId?: string },
-  ): Promise<BattleResult> {
-    return this.battleService.initiateBattle(
-      battleDto.attackerId,
-      battleDto.defenderId,
-    );
+  async battle(@Body() battleDto: CreateBattleDto): Promise<BattleResult> {
+    return this.battleService.initiateBattle(battleDto.attackerId, battleDto.defenderId);
   }
 
   @Get()
-  async getAllBattles(
-    @Query('limit') limitParam: string = '10',
-    @Query('page') pageParam: string = '1',
-  ): Promise<BattlesResponse> {
-    const limit = parseInt(limitParam, 10);
-    const page = parseInt(pageParam, 10);
-    const { battles, total } = await this.battleService.getAllBattles(
-      limit,
-      page,
-    );
+  async getAllBattles(@Query() query: GetBattlesDto): Promise<BattlesResponse> {
+    const limit = parseInt(query.limit || '10', 10);
+    const page = parseInt(query.page || '1', 10);
+    const { battles, total } = await this.battleService.getAllBattles(limit, page);
     const totalPages = Math.ceil(total / limit);
 
     return {
