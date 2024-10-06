@@ -1,5 +1,5 @@
 import { LinearProgress, Typography } from '@mui/material';
-import { StatProp } from '../types/types';
+import { StatProp } from '../../types/types';
 
 function Stat({ name, value }: StatProp) {
   return (

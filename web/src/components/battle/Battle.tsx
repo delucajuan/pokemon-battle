@@ -1,8 +1,9 @@
 import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
-import { BattleProps } from '../types/types';
-import useBattle from '../hooks/useBattle';
+import { BattleProps } from '../../types/types';
+import useBattle from '../../hooks/useBattle';
 import { useEffect, useState } from 'react';
 import PokemonBattleCard from './PokemonBattleCard';
+import WinnerAlert from './WinnerAlert';
 
 function Battle({ attacker, defender, winnerName, setWinnerName }: BattleProps) {
   const { mutate, data: battleResult, isSuccess } = useBattle();
@@ -33,6 +34,13 @@ function Battle({ attacker, defender, winnerName, setWinnerName }: BattleProps) 
   }
   return (
     <>
+      {winnerName && (
+        /* XS screens only */
+        <Box display={{ xs: 'flex', sm: 'none' }} justifyContent="center" paddingBottom={2}>
+          <WinnerAlert winner={winnerName} />
+        </Box>
+      )}
+
       <Stack direction="row" spacing={2} justifyContent="space-between">
         <PokemonBattleCard
           pokemon={attacker}
@@ -42,11 +50,29 @@ function Battle({ attacker, defender, winnerName, setWinnerName }: BattleProps) 
                 ? `solid 4px ${theme.palette.success.main}`
                 : winnerName
                 ? `solid 4px ${theme.palette.error.main}`
-                : 'none',
+                : 'solid 4px transparent',
           }}
         />
-        <Box alignContent="center" display={{ xs: 'none', sm: 'unset' }}>
-          <Typography variant="h3" textAlign="center" margin={4}>
+
+        {/* SM and up screens */}
+        <Stack
+          alignContent="center"
+          justifyContent="center"
+          display={{ xs: 'none', sm: 'flex' }}
+          flexGrow={1}
+          position="relative"
+        >
+          {winnerName && (
+            <WinnerAlert
+              winner={winnerName}
+              sx={{
+                position: 'absolute',
+                marginBottom: 4,
+                bottom: '64%',
+              }}
+            ></WinnerAlert>
+          )}
+          <Typography variant="h3" textAlign="center" marginBottom={4}>
             VS
           </Typography>
           <Button
@@ -57,10 +83,12 @@ function Battle({ attacker, defender, winnerName, setWinnerName }: BattleProps) 
               handleStartBattle();
             }}
             size="large"
+            sx={{ minWidth: '150px' }}
           >
             Start battle
           </Button>
-        </Box>
+        </Stack>
+
         <PokemonBattleCard
           pokemon={defender}
           sx={{
@@ -69,7 +97,7 @@ function Battle({ attacker, defender, winnerName, setWinnerName }: BattleProps) 
                 ? `solid 4px ${theme.palette.success.main}`
                 : winnerName
                 ? `solid 4px ${theme.palette.error.main}`
-                : 'none',
+                : 'solid 4px transparent',
           }}
         />
       </Stack>

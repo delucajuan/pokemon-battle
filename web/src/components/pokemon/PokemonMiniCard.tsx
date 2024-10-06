@@ -1,5 +1,5 @@
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
-import { PokemonMiniCardProps } from '../types/types';
+import { PokemonMiniCardProps } from '../../types/types';
 
 function PokemonMiniCard({ pokemon, onClick }: PokemonMiniCardProps) {
   return (
@@ -18,7 +18,7 @@ function PokemonMiniCard({ pokemon, onClick }: PokemonMiniCardProps) {
             padding: '8px',
           }}
           image={pokemon.imageUrl}
-          alt="pokemon"
+          alt={pokemon.name}
         />
         <CardContent sx={{ paddingY: 1 }}>
           <Typography textAlign="center">{pokemon.name}</Typography>

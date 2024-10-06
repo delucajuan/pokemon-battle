@@ -8,7 +8,7 @@ import {
   TableRow,
   useTheme,
 } from '@mui/material';
-import { Battle } from '../types/types';
+import { Battle } from '../../types/types';
 
 function History({ battles }: { battles: Battle[] }) {
   const theme = useTheme();

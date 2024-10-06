@@ -1,17 +1,19 @@
-import { Alert, AlertTitle, Box, Container, Grid2, Typography } from '@mui/material';
-import usePokemon from '../hooks/usePokemon';
-import Error from '../components/Error';
-import PokemonMiniCard from '../components/PokemonMiniCard';
-import { Pokemon } from '../types/types';
-import Battle from '../components/Battle';
+import { Box, Container, Typography, Grid2 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import History from '../components/History';
-import useHistory from '../hooks/useHistory';
 import { useQueryClient } from '@tanstack/react-query';
+import usePokemon from '../hooks/usePokemon';
+import useHistory from '../hooks/useHistory';
+import Error from '../components/common/Error';
+import PokemonMiniCard from '../components/pokemon/PokemonMiniCard';
+import Battle from '../components/battle/Battle';
+import History from '../components/history/History';
+import PokemonsSelectSkeleton from '../components/skeletons/PokemonsSelectSkeleton';
+import HistorySkeleton from '../components/skeletons/HistorySkeleton';
+import { Pokemon } from '../types/types';
 
 function Home() {
-  const { data: pokemons, isLoading, error } = usePokemon();
-  const { data: battlesData } = useHistory();
+  const { data: pokemons, isLoading: loadingPokemons, error: pokemonsError } = usePokemon();
+  const { data: battlesData, isLoading: loadingHistory, error: historyError } = useHistory();
   const battles = battlesData?.data;
   const queryClient = useQueryClient();
 
@@ -45,64 +47,56 @@ function Home() {
     }
   }, [winnerName, queryClient]);
 
-  if (isLoading) {
-    return <></>;
-  }
-  if (error || !pokemons) {
+  if (pokemonsError || historyError) {
     return <Error />;
   }
+
   return (
     <Container
       maxWidth={false}
       sx={{ maxWidth: '800px', minWidth: '300px', padding: { xs: 1, sm: 2 } }}
     >
-      <Typography variant="h3" gutterBottom>
-        Battle of Pokémon
-      </Typography>
-      <Typography variant="h5" gutterBottom>
-        Select your Pokémon
-      </Typography>
-      <Grid2 container spacing={2} justifyContent="center" paddingY={3}>
-        {pokemons?.map((pokemon) => (
-          <Grid2 key={pokemon.id}>
-            <PokemonMiniCard pokemon={pokemon} onClick={handlePokemonClick} />
-          </Grid2>
-        ))}
-      </Grid2>
-      {winnerName && (
-        <Alert
-          icon={false}
-          variant="filled"
-          color="success"
-          sx={{
-            justifyContent: 'center',
-            maxWidth: 230,
-            margin: 'auto',
-            borderRadius: '30px',
-          }}
-        >
-          <AlertTitle variant="h6" margin={0}>
-            {winnerName} wins!
-          </AlertTitle>
-        </Alert>
-      )}
-      {attacker && (
-        <Box paddingY={3}>
-          <Battle
-            attacker={attacker}
-            defender={defender}
-            winnerName={winnerName}
-            setWinnerName={setWinnerName}
-          />
-        </Box>
-      )}
-      {battles && battles.length && (
-        <Box paddingY={3}>
-          <Typography variant="h5" gutterBottom>
-            Recent battles
+      {loadingPokemons ? (
+        <PokemonsSelectSkeleton />
+      ) : (
+        <>
+          <Typography variant="h3" gutterBottom>
+            Battle of Pokémon
           </Typography>
-          <History battles={battles} />
-        </Box>
+          <Typography variant="h5" gutterBottom>
+            Select your Pokémon
+          </Typography>
+          <Grid2 container spacing={2} justifyContent="center" paddingY={3}>
+            {pokemons?.map((pokemon) => (
+              <Grid2 key={pokemon.id}>
+                <PokemonMiniCard pokemon={pokemon} onClick={handlePokemonClick} />
+              </Grid2>
+            ))}
+          </Grid2>
+          {attacker && (
+            <Box paddingY={3}>
+              <Battle
+                attacker={attacker}
+                defender={defender}
+                winnerName={winnerName}
+                setWinnerName={setWinnerName}
+              />
+            </Box>
+          )}
+        </>
+      )}
+
+      {loadingHistory ? (
+        <HistorySkeleton />
+      ) : (
+        battles?.length && (
+          <Box paddingY={3}>
+            <Typography variant="h5" gutterBottom>
+              Recent battles
+            </Typography>
+            <History battles={battles} />
+          </Box>
+        )
       )}
     </Container>
   );

@@ -7,8 +7,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { PokemonBattleCardProps } from '../types/types';
-import Stat from './Stat';
+import { PokemonBattleCardProps } from '../../types/types';
+import Stat from '../pokemon/Stat';
 
 function PokemonBattleCard({ pokemon, ...cardProps }: PokemonBattleCardProps) {
   const theme = useTheme();
@@ -17,7 +17,7 @@ function PokemonBattleCard({ pokemon, ...cardProps }: PokemonBattleCardProps) {
     <Card
       {...cardProps}
       sx={{
-        width: 280,
+        width: 265,
         borderRadius: '10px',
         ...cardProps.sx,
       }}
