@@ -89,7 +89,8 @@ function Home() {
       {loadingHistory ? (
         <HistorySkeleton />
       ) : (
-        battles?.length && (
+        battles &&
+        battles?.length > 0 && (
           <Box paddingY={3}>
             <Typography variant="h5" gutterBottom>
               Recent battles
