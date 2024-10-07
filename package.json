@@ -1,0 +1,13 @@
+{
+  "name": "pokemon-battle",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run start:api\" \"npm run start:web\"",
+    "start:api": "npm --prefix api run migration:run && npm --prefix api run start:dev",
+    "start:web": "npm --prefix web run start",
+    "install:all": "npm install && npm --prefix api install && npm --prefix web install"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

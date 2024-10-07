@@ -1,0 +1,25 @@
+services:
+  web:
+    container_name: web
+    build: ./web
+    ports:
+      - '3000:3000'
+    depends_on:
+      - api
+    environment:
+      - REACT_APP_API_URL=http://localhost:5010/api
+
+  api:
+    container_name: api
+    build: ./api
+    init: true
+    ports:
+      - '5010:5010'
+    volumes:
+      - db-data:/app/db
+    environment:
+      - PORT=5010
+    command: ['sh', '-c', 'npm run migration:run && npm run start']
+
+volumes:
+  db-data:

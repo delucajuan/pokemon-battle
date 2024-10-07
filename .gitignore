@@ -136,7 +136,7 @@ dist
 
 # DB
 *.sqlite
-api/pokemon-battle.sqlite
+db
 
 # production
 /build
