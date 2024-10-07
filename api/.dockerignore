@@ -5,6 +5,7 @@ docker-compose.yml
 dist
 coverage
 .env
+.env.example
 .git
 .vscode
 .DS_Store

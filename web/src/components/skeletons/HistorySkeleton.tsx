@@ -8,7 +8,7 @@ function HistorySkeleton() {
           Recent battles
         </Typography>
       </Skeleton>
-      <Skeleton variant="rounded" width={768} height={366} />
+      <Skeleton variant="rounded" width={768} height={366} sx={{ maxWidth: '100%' }} />
     </>
   );
 }
