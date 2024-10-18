@@ -21,8 +21,8 @@ async function bootstrap() {
 
   // Swagger configuration
   const config = new DocumentBuilder()
-    .setTitle('Pokemon Battle API')
-    .setDescription('API for managing Pokemon battles')
+    .setTitle('Pokémon Battle API')
+    .setDescription('API for managing Pokémon battles')
     .setVersion('1.0')
     .build();
 

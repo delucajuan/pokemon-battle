@@ -6,7 +6,7 @@ import { BattlesResponse } from './dto/battlesResponse.dto';
 import { CreateBattleDto } from './dto/createBattle.dto';
 import { GetBattlesDto } from './dto/getBattles.dto';
 
-@ApiTags('battle')
+@ApiTags('Battle')
 @Controller('battle')
 export class BattleController {
   constructor(private readonly battleService: BattleService) {}
