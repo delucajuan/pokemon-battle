@@ -14,11 +14,6 @@ export class PokemonService {
     return this.pokemonRepository.find();
   }
 
-  create(pokemonData: Partial<Pokemon>): Promise<Pokemon> {
-    const pokemon = this.pokemonRepository.create(pokemonData);
-    return this.pokemonRepository.save(pokemon);
-  }
-
   findById(id: string): Promise<Pokemon> {
     return this.pokemonRepository.findOneBy({ id });
   }
